@@ -1,0 +1,134 @@
+#
+#
+#
+#      'Holo_offset' is the last height above player's standing block
+#
+#
+#
+#      'Holo_livetick' is the duration of the holographic chat (in ticks) 
+#                           ** 20 ticks = 1 seconds**
+#
+#
+#      'holo_firstoffset' is the first height where the holographic chat summoned
+#
+#
+#      'enable_max_length' is the option if you want to enable chat length.
+#
+#      Example, i say: '123456789123456789123456789' which is a 27_length chat message. And it is beyond 20 (take 20 as an max_length example)
+#      Then, it will become '12345678912345678912....' shown.
+#
+#
+#
+#       NOTE : chat_length counts color codes, every characters, every thing! Spaces too!
+#
+#      'Enable_max_length' will enable 'max_length'. Set to false to disable this feature!
+#
+#      'max_length' option will be NO use at ALL if enable_max_length is set to false.
+#
+#     
+#       chat_format placeholders: %CHAT% (More coming soon, if you would like to add requests for placeholders,
+#       feel free to pm me on spigotmc. (Gober)
+#
+spectator_holo_hidden: true
+use_extreme_follow_method: false #This will be a disaster (Only for Experimental use)
+holo_offset: 2.4
+holo_livetick: 95
+holo_firstoffset: 1.5
+chat_format: "&6Says: &r%CHAT%"
+force_holo_chat_first_join: true
+chat_pops_during_chat: true
+always_enable_holo_chat_join: true
+nearby_only:
+   use_system: true
+   min_range: 13
+original_chat:
+   hidden: false
+   requires_toggle: true
+words_system:
+   enable_system: true
+   max_words: 30
+   max_words_line: 5
+   max_word_length: 17
+   max_sentence_length_line: 24
+   advanced_only:
+      full_attempt_check: 1
+#
+#
+#   LENGTHS
+#   This will be ignored if you enable words_system, except for the
+#   enable_new_line_if_full (Crucial).
+#
+enable_max_length: false
+max_length: 35
+enable_new_line_if_full: true
+each_line_length: 15
+#
+#
+#     MESSAGES
+#
+chat_on: "&8[&f&l!&8] &7You're chat will now pop up. (&aON&7)"
+chat_off: "&8[&f&l!&8] &7You're chat won't pop up anymore. (&cOFF&7)"
+no_permission: "&c&lHey! &cCan't do that without permission!"
+command_doesnt_exist: "&cI dont think thats correct.."
+help_messages:
+- "&6&l/=&e&m------------------------&6&l=\\"
+- "     &b&lLast&3&lHolo "
+- " &8>> &f/lh &creload"
+- " &8>> &f/lh &dtoggle"
+- " &8>> &f/lh &6blacklist"
+- "&6&l\\=&e&m------------------------&6&l=/" 
+#
+#  SOUNDS
+#
+# NOTE: Pitch ranges from 0.0 to 2.0
+#       Volume ranges from 0.0 to *
+# 
+# sound will only be heard if enable_sound is set to true
+# 
+# Bigger the sound_volume, the bigger the radius in which the sound is heard.
+#
+# Find sounds in: https://www.spigotmc.org/threads/sounds_spigot_1_8_1_13_1_sound_enums.340452/
+
+# FORMAT: <SOUND>-<VOLUME>-<PITCH>
+local_sounds:
+- "ENTITY_VILLAGER_YES-1.0-0.8"
+enable_local_sound: true
+#
+#   GLOBAL SOUNDS
+# This sound will be played
+# when someone chatted to
+# all players.
+#
+#  This feature might be a bit heavy
+#  as it loops all the player and
+#  playsound to them everytime somebody chats.
+#
+global_sounds:
+- "NOTE_PLING-0.5-2.0"
+enable_global_sound_effect: true
+# Enabled Disabled Worlds/Regions
+#
+# Feel free to change the value below.
+#
+# Remember you can only change the disabled regions if you have
+# WorldGuard. Else it won't work.
+#
+# Changing disable_certain_worlds and disable_certain_regions will improve the performance
+# a little bit.
+#
+# The feature below might be a bit heavy, as it checks if a player is
+# in the disabled_region & disabled_worlds everytime they chat.
+#
+# The Allow_chat_certain_region will only allow player
+# to use holo_chat if they are in a certain WorldGuard region.
+# 
+disable_certain_worlds: true
+disabled_worlds:
+- "MD5"
+ignore_region_option: false
+disable_certain_regions: true
+disabled_regions:
+- "PVP"
+allow_chat_certain_region_only: false
+allowed_regions:
+- "SafeZone"
