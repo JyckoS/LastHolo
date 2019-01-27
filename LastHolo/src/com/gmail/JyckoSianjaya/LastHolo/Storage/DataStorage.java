@@ -26,11 +26,16 @@ public class DataStorage {
 	private static DataStorage instance;
 	private ArrayList<String> blacklists = new ArrayList<String>();
 	private WGVersion wgversion;
+	private ServerVersion srvversion;
 	private CommandPrompter cmdprompter;
 	private Boolean wgenabled;
+	private Boolean usespecialarmorstand;
 	private Boolean ispapi;
 	private CacheStorage cache = CacheStorage.getInstance();
+
 	private DataStorage() {
+		this.srvversion = checkVersion();
+		Utility.sendConsole("Detected Server Version: " + this.srvversion);
 		loadConfig();
 		checkPAPIS();
 		if (ispapi) {
@@ -66,12 +71,48 @@ public class DataStorage {
 			}
 		}.runTaskTimerAsynchronously(LastHolo.getInstance(), 1L, 1L);
 	}
+	public void setSpecialArmor(Boolean use) {
+		this.usespecialarmorstand = use;
+	}
 	public static DataStorage getInstance() {
 		if (instance == null) instance = new DataStorage();
 		return instance;
 	}
 	public boolean isSpectatorHoloHidden() {
 		return this.spectator_hide;
+	}
+	private ServerVersion checkVersion() {
+		String ver = LastHolo.getInstance().getServer().getVersion();
+		if (ver.contains("1.8")) {
+			return ServerVersion.V1_8;
+		}
+		if (ver.contains("1.9")) {
+			return ServerVersion.V1_9;
+		}
+		if (ver.contains("1.10")) {
+			return ServerVersion.V1_10;
+		}
+		if (ver.contains("1.11")) {
+			return ServerVersion.V1_11;
+		}
+		if (ver.contains("1.12")) {
+			return ServerVersion.V1_12;
+		}
+		if (ver.contains("1.13")) {
+			return ServerVersion.V1_13;
+		}
+		return null;
+	}
+	public ServerVersion getServerVersion() {
+		return this.srvversion;
+	}
+	public enum ServerVersion {
+		V1_8,
+		V1_9,
+		V1_10,
+		V1_11,
+		V1_12,
+		V1_13;
 	}
 	public boolean checkPAPI() {
 		return this.ispapi;
@@ -181,6 +222,9 @@ public class DataStorage {
 	public List<String> getAllowedRegions() { return this.allowed_regions; }
 	public boolean isWorldGuardEnabled() { return this.isWGenabled; }
 	public CommandPrompter getCommandPrompter() { return this.cmdprompter; }
+	public Boolean isSpecialArmorStandUsed() {
+		return this.usespecialarmorstand;
+	}
 	private String color(String color) {
 		return Utility.TransColor(color);
 	}
@@ -195,6 +239,7 @@ public class DataStorage {
 		LastHolo.getInstance().reloadConfig();
 		  FileConfiguration config = LastHolo.getInstance().getConfig();
 		  try {
+			  this.usespecialarmorstand = config.getBoolean("special_armorstand");
 			  this.allowed_regions = config.getStringList("allowed_regions");
 			  this.allowedregions_only = config.getBoolean("allow_chat_certain_region_only");
 			  this.chatformat = color(config.getString("chat_format"));
@@ -219,7 +264,7 @@ public class DataStorage {
 					  target = XSound.requestXSound(sond[0]);
 				  } catch (IllegalArgumentException e) {
 					  Utility.sendConsole("The sound: " + sond[0] + "doesn't exist!");
-					  target = XSound.NOTE_PIANO.bukkitSound();
+					  continue;
 				  }
 				  Float vol = Float.valueOf(sond[1]);
 				  Float pitch = Float.valueOf(sond[2]);
@@ -238,7 +283,7 @@ public class DataStorage {
 						  target = XSound.requestXSound(sond[0]);
 					  } catch (IllegalArgumentException e) {
 						  Utility.sendConsole("The sound: " + sond[0] + "doesn't exist!");
-						  target = XSound.NOTE_PIANO.bukkitSound();
+						  continue;
 					  }
 					  Float vol = Float.valueOf(sond[1]);
 					  Float pitch = Float.valueOf(sond[2]);

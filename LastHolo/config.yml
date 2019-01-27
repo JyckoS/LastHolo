@@ -29,6 +29,7 @@
 #       chat_format placeholders: %CHAT% (More coming soon, if you would like to add requests for placeholders,
 #       feel free to pm me on spigotmc. (Gober)
 #
+special_armorstand: true
 spectator_holo_hidden: true
 use_extreme_follow_method: false #This will be a disaster (Only for Experimental use)
 holo_offset: 2.4

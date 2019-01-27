@@ -3,8 +3,12 @@ package com.gmail.JyckoSianjaya.LastHolo.Utility;
 import java.lang.reflect.Constructor;
 
 
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
@@ -34,6 +38,17 @@ public final class Utility {
 		} 
 		return null;
 	  }
+	public static String getNMSVersion() {
+		return Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+	}
+    public static String getMinecraftVersion()
+    {
+      Matcher matcher = Pattern.compile("(\\(MC: )([\\d\\.]+)(\\))").matcher(Bukkit.getVersion());
+      if (matcher.find()) {
+        return matcher.group(2);
+      }
+      return null;
+    }
     public static void playGlobal(Sound s, Float vol, Float pit) {
     	for (Player p : Bukkit.getServer().getOnlinePlayers()) {
     		Location loc = p.getLocation();

@@ -51,6 +51,8 @@ import org.bukkit.scoreboard.NameTagVisibility;
 import com.cyr1en.cp.CommandPrompter;
 import com.gmail.JyckoSianjaya.LastHolo.Commands.LHCommand;
 import com.gmail.JyckoSianjaya.LastHolo.Listeners.LHListener;
+import com.gmail.JyckoSianjaya.LastHolo.NMS.NMSWrapper;
+import com.gmail.JyckoSianjaya.LastHolo.Runnables.SimpleRunnable;
 import com.gmail.JyckoSianjaya.LastHolo.Storage.DataStorage;
 import com.gmail.JyckoSianjaya.LastHolo.Storage.DataStorage.WGVersion;
 import com.gmail.JyckoSianjaya.LastHolo.Utility.Utility;
@@ -64,6 +66,8 @@ public class LastHolo extends JavaPlugin {
 	HashMap<UUID,Boolean> toggle = new HashMap<>();
 	private static LastHolo instance;
 	private DataStorage storage;
+	private SimpleRunnable run;
+	private NMSWrapper nmswrapper;
 	  HashMap<Integer, String> pages = new HashMap<>();
 	  File blist;
   public void PlaySound(Sound sound, Float volu, Float pitu, World w, Location g) {
@@ -73,6 +77,9 @@ public class LastHolo extends JavaPlugin {
   public static LastHolo getInstance() { return instance; }
   private boolean isCmdPromptEnable() {
 	  return this.getServer().getPluginManager().isPluginEnabled("CommandPrompter");
+  }
+  public NMSWrapper getNMS() {
+	  return this.nmswrapper;
   }
 	@Override
 	public void onEnable() {
@@ -117,12 +124,6 @@ public class LastHolo extends JavaPlugin {
 				e.printStackTrace();
 			}
 		}
-		if (!shouldEnable()) {
-			Utility.sendConsole("&9[LastHolo] &eHolographicDisplays&c not found, disabling plugin.");
-			getServer().getPluginManager().disablePlugin(this);
-			this.setEnabled(false);
-      return;
-    } 
 		if (DataStorage.getInstance().isWorldGuardEnabled()) {
 			Utility.sendConsole("&9[LastHolo] &7Hooked into &eWorldGuard.");
 		}
@@ -132,6 +133,8 @@ public class LastHolo extends JavaPlugin {
 			Utility.sendConsole("&9[LastHolo] &7Plugin &asuccessfully enabled&7, have a fancy chat there, enjoy ;)");
 			getServer().getPluginManager().registerEvents(new LHListener(), this);
 			this.getCommand("lastholo").setExecutor(new LHCommand());
+			run = SimpleRunnable.getInstance();
+			this.nmswrapper = new NMSWrapper(this);
 	}
 	public String getDataStorage() {
 		return (this.getDataFolder() + File.separator + "datastorage" + File.separator);

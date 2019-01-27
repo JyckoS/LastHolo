@@ -1,9 +1,8 @@
 name: LastHolo
-version: 3.0.0.0
+version: 4.0.0.0
 description: Chat with holograms if has permission!
 main: com.gmail.JyckoSianjaya.LastHolo.LastHolo
 author: Jycko Sianjaya
-depend: [HolographicDisplays]
 softdepend: [WorldGuard,WorldEdit,CommandPrompter]
 commands:
      lastholo:
