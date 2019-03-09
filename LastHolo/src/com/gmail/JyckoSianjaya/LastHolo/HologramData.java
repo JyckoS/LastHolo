@@ -46,7 +46,9 @@ public class HologramData {
 		ArmorStand armor = (ArmorStand) loc.getWorld().spawnEntity(loc, EntityType.ARMOR_STAND);
 		armor.setMarker(true);
 		armor.setVisible(false);
+		if (data.getServerVersion() != ServerVersion.V1_8) {
 		armor.setInvulnerable(true);
+		}
 		armor.setCustomName(Utility.TransColor(name));
 		armor.setCustomNameVisible(true);
 		armor.setBasePlate(false);

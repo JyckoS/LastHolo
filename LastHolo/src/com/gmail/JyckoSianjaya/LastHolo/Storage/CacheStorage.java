@@ -21,7 +21,13 @@ public class CacheStorage {
 		return holodatas.keySet();
 	}
 	public void removeHoloData(UUID uuid) {
+		this.holodatas.get(uuid).getHologram().delete();
 		this.holodatas.remove(uuid);
+	}
+	public void removeAllHolo() {
+		for (HoloData hd : this.holodatas.values()) {
+			hd.getHologram().delete();
+		}
 	}
 	public Boolean getToggle(UUID uuid) {
 		Boolean toggle = toggles.get(uuid);

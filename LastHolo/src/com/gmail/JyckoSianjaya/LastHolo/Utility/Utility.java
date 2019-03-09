@@ -1,9 +1,8 @@
 package com.gmail.JyckoSianjaya.LastHolo.Utility;
 
 import java.lang.reflect.Constructor;
-
-
-
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -40,6 +39,11 @@ public final class Utility {
 	  }
 	public static String getNMSVersion() {
 		return Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+	}
+	public Double getSignificantFigure(double amount, int sf) {
+		BigDecimal dec = new BigDecimal(amount);
+		dec = dec.round(new MathContext(sf));
+		return dec.doubleValue();
 	}
     public static String getMinecraftVersion()
     {

@@ -30,6 +30,7 @@ public class DataStorage {
 	private CommandPrompter cmdprompter;
 	private Boolean wgenabled;
 	private Boolean usespecialarmorstand;
+	private Boolean usesasyncremoval = true;
 	private Boolean ispapi;
 	private CacheStorage cache = CacheStorage.getInstance();
 
@@ -239,6 +240,7 @@ public class DataStorage {
 		LastHolo.getInstance().reloadConfig();
 		  FileConfiguration config = LastHolo.getInstance().getConfig();
 		  try {
+			  this.usesasyncremoval = config.getBoolean("async_holo_removal");
 			  this.usespecialarmorstand = config.getBoolean("special_armorstand");
 			  this.allowed_regions = config.getStringList("allowed_regions");
 			  this.allowedregions_only = config.getBoolean("allow_chat_certain_region_only");
@@ -359,6 +361,9 @@ public class DataStorage {
 	  public enum WGVersion {
 		  before,
 		  after;
+	  }
+	  public boolean isHoloRemovalAsync() {
+		  return this.usesasyncremoval;
 	  }
 	private Boolean isWEenabled = false;
 	private Boolean isWGenabled = false;

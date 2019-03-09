@@ -53,6 +53,7 @@ import com.gmail.JyckoSianjaya.LastHolo.Commands.LHCommand;
 import com.gmail.JyckoSianjaya.LastHolo.Listeners.LHListener;
 import com.gmail.JyckoSianjaya.LastHolo.NMS.NMSWrapper;
 import com.gmail.JyckoSianjaya.LastHolo.Runnables.SimpleRunnable;
+import com.gmail.JyckoSianjaya.LastHolo.Storage.CacheStorage;
 import com.gmail.JyckoSianjaya.LastHolo.Storage.DataStorage;
 import com.gmail.JyckoSianjaya.LastHolo.Storage.DataStorage.WGVersion;
 import com.gmail.JyckoSianjaya.LastHolo.Utility.Utility;
@@ -148,6 +149,7 @@ public class LastHolo extends JavaPlugin {
     // TODO : Make more things
 		Utility.sendConsole("LastHolo disabled, saving up all player's data.");
 		Collection<? extends Player> players = Bukkit.getOnlinePlayers();
+		CacheStorage.getInstance().removeAllHolo();
 		for (Player p : players) {
 			UUID uuid = p.getUniqueId();
 			File f = new File(this.getDataFolder(), "datastorage" + File.separator + uuid + ".yml");

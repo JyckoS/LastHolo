@@ -5,6 +5,10 @@ import java.util.Collections;
 
 import org.bukkit.Location;
 
+import com.gmail.JyckoSianjaya.LastHolo.Runnables.SimpleRunnable;
+import com.gmail.JyckoSianjaya.LastHolo.Runnables.SimpleTask;
+import com.gmail.JyckoSianjaya.LastHolo.Storage.DataStorage;
+
 public class Hologram {
 	private ArrayList<HologramData> holograms = new ArrayList<HologramData>(30);
 	private Location loc;
@@ -12,11 +16,38 @@ public class Hologram {
 		this.loc = loc;
 	}
 	public void delete() {
+		if (DataStorage.getInstance().isHoloRemovalAsync()) {
 		for (HologramData hd : holograms) {
 			hd.getArmorStand().remove();
 		}
 		holograms.clear();
 		loc = null;
+		}
+		else {
+			SimpleRunnable.getInstance().addTask(new SimpleTask() {
+				@Override
+				public void run() {
+					for (HologramData hd : holograms) {
+						hd.getArmorStand().remove();
+					}
+					holograms.clear();
+					loc = null;
+				}
+
+				@Override
+				public int getHealth() {
+					// TODO Auto-generated method stub
+					return health;
+				}
+
+				@Override
+				public void reduceHealth() {
+					// TODO Auto-generated method stub
+					health--;
+				}
+				int health = 1;
+			});
+		}
 	}
 	public Location getLocation() {
 		return this.loc;
@@ -31,6 +62,8 @@ public class Hologram {
 		holograms.clear();
 	}
 	public void insertLine(int line, String data) {
+		if (data == null) return;
+		if (data.length() <= 0) return;
 		holograms.add(line, HologramData.createHoloData(this.loc, data));
 		teleport(loc);
 	}
@@ -38,6 +71,8 @@ public class Hologram {
 		holograms.remove(line);
 	}
 	public void addLine(String data) {
+		if (data == null) return;
+		if (data.length() <= 1) return;
 		this.holograms.add(HologramData.createHoloData(loc, data));
 		teleport(loc);
 	}
@@ -46,13 +81,12 @@ public class Hologram {
 		holo.teleport(loc);
 		return holo;
 	}
-	public void teleport(Location loc) {
-		this.loc = loc;
-		int holos = holograms.size();
-		Double offset = 0.0; 
+	public void teleport(Location locat) {
+		this.loc = locat.clone();
+		Double offset = 0.0;
 		for (HologramData hd : holograms) {
 			hd.getArmorStand().teleport(loc.clone().add(0.0, offset, 0.0));
-			offset-=0.2;
+			offset = offset - 0.2;
 		}
 	}
 }

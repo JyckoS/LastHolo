@@ -14,6 +14,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 
@@ -54,7 +57,30 @@ public class LHCommand implements TabExecutor {
 		        }
 		      
 		      if(length > 0){
-		    	
+		    	if (args[0].equalsIgnoreCase("clear")) {
+		    		if (!(sender instanceof Player)) {
+		    			Utility.sendMsg(sender, "&cPlayer only.");
+		    			return true;
+		    		}
+		    		Player p = (Player) sender;
+		    		if (!p.hasPermission("lastholo.clear")) {
+		    			Utility.sendMsg(sender, "&cYou can't do that!");
+		    			return true;
+		    		}
+		    		int removed = 0;
+		    		for (Entity ent : p.getNearbyEntities(4, 4, 4)) {
+		    			if (ent.getType() != EntityType.ARMOR_STAND) continue;
+		    			ArmorStand armor = (ArmorStand) ent;
+		    			if (!armor.isSmall()) continue;
+		    			if (!armor.isCustomNameVisible()) continue;
+		    			if (armor.hasGravity()) continue;
+		    			if (armor.hasBasePlate()) continue;
+		    			if (armor.isVisible()) continue;
+		    			armor.remove();
+		    			removed++;
+		    		}
+		    		Utility.sendMsg(sender, removed + " &cholograms removed.");
+		    	}
 		    	  if(args[0].equalsIgnoreCase("reload")){
 		    		  if (sender instanceof Player) {
 		    			  if(!player.hasPermission("holo.reload")){
