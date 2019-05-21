@@ -29,6 +29,7 @@ public class DataStorage {
 	private ServerVersion srvversion;
 	private CommandPrompter cmdprompter;
 	private Boolean wgenabled;
+	private Boolean asyncprocess = true;
 	private Boolean usespecialarmorstand;
 	private Boolean usesasyncremoval = true;
 	private Boolean ispapi;
@@ -113,7 +114,7 @@ public class DataStorage {
 		V1_10,
 		V1_11,
 		V1_12,
-		V1_13;
+		V1_13, V1_14;
 	}
 	public boolean checkPAPI() {
 		return this.ispapi;
@@ -293,6 +294,7 @@ public class DataStorage {
 					  this.localsounds.add(sound);
 				  }
 			  }
+			  this.asyncprocess = config.getBoolean("async_chat_processing");
 			  this.hide_original_chat = config.getBoolean("original_chat.hidden");
 			  this.hide_requires_toggle = config.getBoolean("original_chat.requires_toggle");
 			  this.holo_chat_always_enable = config.getBoolean("always_enable_holo_chat_join");
@@ -364,6 +366,9 @@ public class DataStorage {
 	  }
 	  public boolean isHoloRemovalAsync() {
 		  return this.usesasyncremoval;
+	  }
+	  public boolean isProcessingAsync() {
+		  return this.asyncprocess;
 	  }
 	private Boolean isWEenabled = false;
 	private Boolean isWGenabled = false;

@@ -64,8 +64,26 @@ public class Hologram {
 	public void insertLine(int line, String data) {
 		if (data == null) return;
 		if (data.length() <= 0) return;
-		holograms.add(line, HologramData.createHoloData(this.loc, data));
+		SimpleRunnable.getInstance().addTask(new SimpleTask() {
+			int health = 1;
+		@Override
+		public void run() {
+			holograms.add(line, HologramData.createHoloData(loc, data));
 		teleport(loc);
+		}
+
+		@Override
+		public int getHealth() {
+			// TODO Auto-generated method stub
+			return health;
+		}
+
+		@Override
+		public void reduceHealth() {
+			// TODO Auto-generated method stub
+			health--;
+		}
+		});
 	}
 	public void removeLine(int line) {
 		holograms.remove(line);
@@ -73,8 +91,26 @@ public class Hologram {
 	public void addLine(String data) {
 		if (data == null) return;
 		if (data.length() <= 1) return;
-		this.holograms.add(HologramData.createHoloData(loc, data));
-		teleport(loc);
+		SimpleRunnable.getInstance().addTask(new SimpleTask() {
+			int health = 1;
+		@Override
+		public void run() {
+			holograms.add(HologramData.createHoloData(loc, data));
+			teleport(loc);
+		}
+
+		@Override
+		public int getHealth() {
+			// TODO Auto-generated method stub
+			return health;
+		}
+
+		@Override
+		public void reduceHealth() {
+			// TODO Auto-generated method stub
+			health--;
+		}
+		});
 	}
 	public static Hologram createHologram(Location loc) {
 		Hologram holo = new Hologram(loc);

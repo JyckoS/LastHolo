@@ -29,6 +29,7 @@
 #       chat_format placeholders: %CHAT% (More coming soon, if you would like to add requests for placeholders,
 #       feel free to pm me on spigotmc. (Gober)
 #
+async_chat_processing: true #Takes effect on restart
 async_holo_removal: true
 special_armorstand: true
 async_teleportation: true
@@ -69,8 +70,8 @@ each_line_length: 15
 #
 #     MESSAGES
 #
-chat_on: "&8[&f&l!&8] &7You're chat will now pop up. (&aON&7)"
-chat_off: "&8[&f&l!&8] &7You're chat won't pop up anymore. (&cOFF&7)"
+chat_on: "&8[&f&l!&8] &7Your chat will now pop up. (&aON&7)"
+chat_off: "&8[&f&l!&8] &7Your chat won't pop up anymore. (&cOFF&7)"
 no_permission: "&c&lHey! &cCan't do that without permission!"
 command_doesnt_exist: "&cI dont think thats correct.."
 help_messages:

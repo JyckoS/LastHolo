@@ -10,6 +10,7 @@ import com.gmail.JyckoSianjaya.LastHolo.NMS.ArmorStand_10;
 import com.gmail.JyckoSianjaya.LastHolo.NMS.ArmorStand_11;
 import com.gmail.JyckoSianjaya.LastHolo.NMS.ArmorStand_12;
 import com.gmail.JyckoSianjaya.LastHolo.NMS.ArmorStand_13;
+import com.gmail.JyckoSianjaya.LastHolo.NMS.ArmorStand_14;
 import com.gmail.JyckoSianjaya.LastHolo.NMS.ArmorStand_8;
 import com.gmail.JyckoSianjaya.LastHolo.NMS.ArmorStand_9;
 import com.gmail.JyckoSianjaya.LastHolo.Storage.DataStorage;
@@ -39,6 +40,8 @@ public class HologramData {
 			return ArmorStand_12.createHoloData(loc, name);
 		case V1_13:
 			return ArmorStand_13.createHoloData(loc, name);
+		case V1_14:
+			return ArmorStand_14.createHoloData(loc, name);
 		default:
 			return null;
 		}

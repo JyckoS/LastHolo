@@ -50,7 +50,9 @@ import org.bukkit.scoreboard.NameTagVisibility;
 
 import com.cyr1en.cp.CommandPrompter;
 import com.gmail.JyckoSianjaya.LastHolo.Commands.LHCommand;
+import com.gmail.JyckoSianjaya.LastHolo.Listeners.AsyncChat;
 import com.gmail.JyckoSianjaya.LastHolo.Listeners.LHListener;
+import com.gmail.JyckoSianjaya.LastHolo.Listeners.SyncChat;
 import com.gmail.JyckoSianjaya.LastHolo.NMS.NMSWrapper;
 import com.gmail.JyckoSianjaya.LastHolo.Runnables.SimpleRunnable;
 import com.gmail.JyckoSianjaya.LastHolo.Storage.CacheStorage;
@@ -108,7 +110,7 @@ public class LastHolo extends JavaPlugin {
 		} catch (Exception e) {
 			Utility.sendConsole("Couldn't get the latest version for LastHolo.");
 		}
-		blist = new File(this.getDataFolder(), "datastorage" + File.separator);
+		blist = new File(this.getDataFolder(), "datastorage " + File.separator);
 		if (!blist.exists()) {
 			blist.mkdir();
 		}
@@ -133,6 +135,13 @@ public class LastHolo extends JavaPlugin {
 		}
 			Utility.sendConsole("&9[LastHolo] &7Plugin &asuccessfully enabled&7, have a fancy chat there, enjoy ;)");
 			getServer().getPluginManager().registerEvents(new LHListener(), this);
+			if (DataStorage.getInstance().isProcessingAsync()) {
+				this.getServer().getPluginManager().registerEvents(new AsyncChat(), this);
+			}
+			else {
+				this.getServer().getPluginManager().registerEvents(new SyncChat(), this);
+
+			}
 			this.getCommand("lastholo").setExecutor(new LHCommand());
 			run = SimpleRunnable.getInstance();
 			this.nmswrapper = new NMSWrapper(this);
