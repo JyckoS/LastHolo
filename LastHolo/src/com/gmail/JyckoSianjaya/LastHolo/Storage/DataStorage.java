@@ -103,6 +103,10 @@ public class DataStorage {
 		if (ver.contains("1.13")) {
 			return ServerVersion.V1_13;
 		}
+		if (ver.contains("1.14")) {
+			return ServerVersion.V1_14;	
+		}
+
 		return null;
 	}
 	public ServerVersion getServerVersion() {
